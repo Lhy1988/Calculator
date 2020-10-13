@@ -1,0 +1,136 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace _2_5
+{
+    abstract class Calculator
+    {
+
+        public abstract int Task(int num1, int num2);
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+            Calculator comObj = obj as Calculator;
+            if (comObj == null)
+            {
+                return false;
+            }
+            else
+            {
+                return base.Equals(comObj);
+            }
+        }
+    }
+}
+
+class Divide:Calculator
+    {
+        public override int Task(int _firstNumber, int _secondNumber)
+        {
+            divide(_firstNumber, _secondNumber);
+            return 0;
+        }
+        public void divide(int _firstNumber, int _secondNumber)
+        {
+            try
+            {
+                Console.WriteLine(_firstNumber / _secondNumber);
+            }
+            catch (DivideByZeroException)
+            {
+                Console.WriteLine("错误：除数为0！");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("输入格式错误：应输入一个整数！");
+            }
+        }
+    }
+}
+class Multiply:Calculator
+    {
+        public override int Task(int _firstNumber, int _secondNumber)
+        {
+            return _firstNumber * _secondNumber;
+        }
+    }
+}
+
+class Program
+    {
+        static void Main(string[] args)
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                Console.WriteLine("请输入运算数数及运算符：");
+                string str = Console.ReadLine();
+                string[] data = str.Split(' ');
+
+                Calculator count;
+
+                switch (data[1])
+                {
+                    case "+": Add add = new Add(); count = add; Console.WriteLine( count.Task(int.Parse(data[0]), int.Parse(data[2]))); break;
+                    case "-": Subtract sub = new Subtract(); count = sub; Console.WriteLine( count.Task(int.Parse(data[0]), int.Parse(data[2]))); break;
+                    case "*": Multiply mtp = new Multiply(); count = mtp; Console.WriteLine( count.Task(int.Parse(data[0]), int.Parse(data[2]))); break;
+                    case "/": Divide dvd = new Divide(); count = dvd;  count.Task(int.Parse(data[0]), int.Parse(data[2])); break;
+                    case "&": And and = new And(); count = and; Console.WriteLine(count.Task(int.Parse(data[0]), int.Parse(data[2]))); break;
+                    case "%": Remainder rmd = new Remainder(); count = rmd; Console.WriteLine( count.Task(int.Parse(data[0]), int.Parse(data[2]))); break;
+                }
+            }
+
+        }
+    }
+}
+
+class Remainder:Calculator
+    {
+        public override int Task(int _firstNumber, int _secondNumber)
+        {
+            return _firstNumber % _secondNumber;
+        }
+    }
+}
+
+class Subtract:Calculator
+    {
+        public override int Task(int _firstNumber, int _secondNumber)
+        {
+            return _firstNumber - _secondNumber;
+        }
+        public string dvd(string _firstNumber, string _secondNumber)
+        {
+            int num1 = int.Parse(_firstNumber);
+            int num2 = int.Parse(_secondNumber);
+            return (num1 / num2).ToString();
+        }
+    }
+}
+
+class Add:Calculator
+    {
+        public  override int Task(int _firstNumber, int _secondNumber)
+        {
+            return _firstNumber + _secondNumber;
+        }
+        public string link(string _firstNumber, string _secondNumber)
+        {
+            return _firstNumber + _secondNumber;
+        }
+    }
+}
+
+class And:Calculator
+    {
+        public override int Task(int _firstNumber, int _secondNumber)
+        {
+            return _firstNumber & _secondNumber;
+        }
+    }
+}
